@@ -5,7 +5,7 @@ namespace MePoupe2.API.DTOs
 {
 	public record LancamentoProgramadoInputModel : LancamentoBaseInputModel
 	{
-		public DateTime ProximoLancamento { get; private set; }
-		public int Periodo { get; private set; }
+		public DateTime ProximoLancamento { get; set; }
+		public int Periodo { get; set; }
 	}
 }

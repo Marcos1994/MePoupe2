@@ -7,11 +7,11 @@ namespace MePoupe2.API.DTOs
 {
 	public abstract record LancamentoBaseInputModel
 	{
-		public int Id { get; private set; }
-		public string Nome { get; private set; }
-		public string Categoria { get; private set; }
-		public CaixaInputModel Caixa { get; private set; }
-		public bool Receita { get; private set; }
-		public float Valor { get; private set; }
+		public int Id { get; set; }
+		public string Nome { get; set; }
+		public string Categoria { get; set; }
+		public CaixaInputModel Caixa { get; set; }
+		public bool Receita { get; set; }
+		public float Valor { get; set; }
 	}
 }

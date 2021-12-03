@@ -7,11 +7,11 @@ namespace MePoupe2.API.DTOs
 {
 	public record CaixaInputModel
 	{
-		public int Id { get; private set; }
-		public int Dono { get; private set; }
-		public string Nome { get; private set; }
-		public string Descricao { get; private set; }
-		public float Quantia { get; private set; }
-		public bool CartaoCredito { get; private set; }
+		public int Id { get; set; }
+		public int Dono { get; set; }
+		public string Nome { get; set; }
+		public string Descricao { get; set; }
+		public float Quantia { get; set; }
+		public bool FaturaCartaoCredito { get; set; }
 	}
 }

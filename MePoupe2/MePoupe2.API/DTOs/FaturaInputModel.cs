@@ -7,7 +7,7 @@ namespace MePoupe2.API.DTOs
 {
 	public record FaturaInputModel : LancamentoInputModel
 	{
-		public CaixaInputModel CaixaOrigem { get; private set; } //Caixa ao qual a fatura pertence
-		public List<LancamentoInputModel> LancamentosFatura { get; private set; } 
+		public CaixaInputModel CaixaOrigem { get; set; } //Caixa ao qual a fatura pertence
+		public List<LancamentoInputModel> LancamentosFatura { get; set; } 
 	}
 }
