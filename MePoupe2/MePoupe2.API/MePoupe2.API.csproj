@@ -19,7 +19,6 @@
     <Folder Include="Aplicacao\Servicos\" />
     <Folder Include="Aplicacao\Interfaces\" />
     <Folder Include="Excecoes\" />
-    <Folder Include="Persistencia\Interfaces\" />
   </ItemGroup>
 
 </Project>
