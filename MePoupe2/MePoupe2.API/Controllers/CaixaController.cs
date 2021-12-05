@@ -1,4 +1,6 @@
-﻿using MePoupe2.API.DTOs;
+﻿using MePoupe2.API.Aplicacao.InputModels;
+using MePoupe2.API.Persistencia;
+using MePoupe2.API.Persistencia.Context;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,6 +14,13 @@ namespace MePoupe2.API.Controllers
 	[ApiController]
 	public class CaixaController : ControllerBase
 	{
+		private readonly MePoupe2DbContext dbContext;
+
+		public CaixaController(MePoupe2DbContext dbContext)
+		{
+			this.dbContext = dbContext;
+		}
+
 		[HttpGet]
 		public IActionResult GetAll()
 		{

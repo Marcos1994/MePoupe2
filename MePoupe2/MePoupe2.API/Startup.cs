@@ -1,7 +1,10 @@
+using MePoupe2.API.Persistencia;
+using MePoupe2.API.Persistencia.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,6 +29,9 @@ namespace MePoupe2.API
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			var connectionString = Configuration.GetConnectionString("MePoupe2Cs");
+
+			services.AddDbContext<MePoupe2DbContext>(o => o.UseSqlServer(connectionString));
 
 			services.AddControllers();
 			services.AddSwaggerGen(c =>
