@@ -1,4 +1,5 @@
 ﻿using MePoupe2.API.Persistencia.Context;
+using MePoupe2.API.Persistencia.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;

@@ -26,5 +26,13 @@ namespace MePoupe2.API.Persistencia.Entidades
 		public int? IdFaturaCartaoCredito { get; private set; }
 		public bool Ativo { get; private set; }
 		public List<Lancamento> Lancamentos { get; private set; }
+
+		public void Update(string nome, string descricao, float quantia, bool ativo)
+		{
+			Nome = nome;
+			Descricao = descricao;
+			Quantia = quantia;
+			Ativo = ativo;
+		}
 	}
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MePoupe2.API.Persistencia.Repositorios
+namespace MePoupe2.API.Persistencia.Interfaces
 {
 	public interface IRepository
 	{

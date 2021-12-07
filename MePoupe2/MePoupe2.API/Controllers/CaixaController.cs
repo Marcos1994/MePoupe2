@@ -1,4 +1,6 @@
 ﻿using MePoupe2.API.Aplicacao.InputModels;
+using MePoupe2.API.Aplicacao.Interfaces;
+using MePoupe2.API.Aplicacao.UpdateModels;
 using MePoupe2.API.Persistencia;
 using MePoupe2.API.Persistencia.Context;
 using Microsoft.AspNetCore.Http;
@@ -14,41 +16,79 @@ namespace MePoupe2.API.Controllers
 	[ApiController]
 	public class CaixaController : ControllerBase
 	{
-		private readonly MePoupe2DbContext dbContext;
+		private readonly ICaixaService caixaService;
 
-		public CaixaController(MePoupe2DbContext dbContext)
+		public CaixaController(ICaixaService caixaService)
 		{
-			this.dbContext = dbContext;
+			this.caixaService = caixaService;
 		}
 
 		[HttpGet]
 		public IActionResult GetAll()
 		{
-			return Ok();
+			return Ok(caixaService.ListarCaixas(1));
 		}
 
 		[HttpGet("{id}")]
 		public IActionResult GetById(int id)
 		{
-			return Ok();
+			var caixa = caixaService.CarregarCaixa(id);
+			if (caixa == null)
+				return NotFound();
+			return Ok(caixa);
 		}
 
 		[HttpPost]
 		public IActionResult Post(CaixaInputModel model)
 		{
-			return CreatedAtAction(nameof(GetById), new { id=1 }, model);
+			var caixa = caixaService.CriarCaixa(model);
+			return CreatedAtAction(nameof(GetById), new { id=caixa.Id }, caixa);
+		}
+
+		[HttpPut]
+		public IActionResult Put(CaixaUpdateModel model)
+		{
+			var caixa = caixaService.CarregarCaixa(model.Id);
+			if (caixa == null)
+				return NotFound();
+			caixaService.AtualizarCaixa(model);
+			return Ok();
 		}
 
 		[HttpPut("{id}")]
-		public IActionResult Put(int id, CaixaInputModel model)
+		public IActionResult Put(int id, bool ativo)
 		{
+			var caixa = caixaService.CarregarCaixa(id);
+			if (caixa == null)
+				return NotFound();
+
+			try
+			{
+				caixaService.AtivarCaixa(id, ativo);
+			}
+			catch
+			{
+				return BadRequest();
+			}
 			return Ok();
 		}
 
 		[HttpDelete("{id}")]
 		public IActionResult Delete(int id)
 		{
-			return NoContent();
+			var caixa = caixaService.CarregarCaixa(id);
+			if (caixa == null)
+				return NotFound();
+
+			try
+			{
+				caixaService.ExcluirCaixa(id);
+			}
+			catch
+			{
+				return BadRequest();
+			}
+			return Ok();
 		}
 	}
 }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "wygn+5/xjG75WBpZMhoAPJ1o2xA1OyR4XwvS1FonRmMURlu7ZNRpdHHht0qFcwjNqXIQxevcmYXvKw7kVYpH4A==",
+  "dgSpecHash": "yNAAX4Uqk3ePl/4+zR5wjYNQttcj6UatxwXb8jXBW3q3x8iWBrestoB3mBBm4XcMYGz7eGVodlDaJ4FToRv9/A==",
   "success": true,
   "projectFilePath": "F:\\Projetos\\MePoupe2\\MePoupe2\\MePoupe2.API\\MePoupe2.API.csproj",
   "expectedPackageFiles": [
@@ -109,8 +109,7 @@
     "C:\\Users\\Andre\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\Andre\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\Andre\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\Andre\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
-    "C:\\Users\\Andre\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.12\\microsoft.netcore.app.host.win-x64.5.0.12.nupkg.sha512"
+    "C:\\Users\\Andre\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
   ],
   "logs": []
 }

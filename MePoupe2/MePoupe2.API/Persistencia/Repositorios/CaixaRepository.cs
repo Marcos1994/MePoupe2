@@ -1,5 +1,6 @@
 ﻿using MePoupe2.API.Persistencia.Context;
 using MePoupe2.API.Persistencia.Entidades;
+using MePoupe2.API.Persistencia.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
