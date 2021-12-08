@@ -4,14 +4,16 @@ using MePoupe2.API.Persistencia.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace MePoupe2.API.Percistencia.Migrations
+namespace MePoupe2.API.Persistencia.Migrations
 {
     [DbContext(typeof(MePoupe2DbContext))]
-    partial class MePoupe2DbContextModelSnapshot : ModelSnapshot
+    [Migration("20211208164625_MudarNomeColunaDonoEmCaixa")]
+    partial class MudarNomeColunaDonoEmCaixa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -38,8 +38,7 @@ namespace MePoupe2.API
 
 			services.AddScoped<ICaixaReposiroty, CaixaRepository>();
 
-			var connectionString = Configuration.GetConnectionString("MePoupe2Cs");
-			services.AddDbContext<MePoupe2DbContext>(o => o.UseSqlServer(connectionString));
+			services.AddDbContext<MePoupe2DbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("MePoupe2Cs")));
 			services.AddScoped<MePoupe2DbContext>();
 
 			services.AddAutoMapper(typeof(CaixaProfile));

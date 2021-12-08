@@ -7,6 +7,11 @@ namespace MePoupe2.API.Persistencia.Entidades
 {
 	public class Caixa
 	{
+		public Caixa()
+		{
+
+		}
+
 		public Caixa(int idDono, string nome, string descricao, float quantia, int? idFaturaCartaoCredito, bool ativo)
 		{
 			IdDono = idDono;
