@@ -62,3 +62,5 @@ F:\Projetos\MePoupe2\MePoupe2\MePoupe2.API\bin\Debug\net5.0\runtimes\win\lib\net
 F:\Projetos\MePoupe2\MePoupe2\MePoupe2.API\bin\Debug\net5.0\FluentValidation.dll
 F:\Projetos\MePoupe2\MePoupe2\MePoupe2.API\bin\Debug\net5.0\FluentValidation.AspNetCore.dll
 F:\Projetos\MePoupe2\MePoupe2\MePoupe2.API\bin\Debug\net5.0\FluentValidation.DependencyInjectionExtensions.dll
+F:\Projetos\MePoupe2\MePoupe2\MePoupe2.API\bin\Debug\net5.0\AutoMapper.dll
+F:\Projetos\MePoupe2\MePoupe2\MePoupe2.API\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

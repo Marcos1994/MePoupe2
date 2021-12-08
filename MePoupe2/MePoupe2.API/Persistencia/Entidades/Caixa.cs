@@ -7,9 +7,9 @@ namespace MePoupe2.API.Persistencia.Entidades
 {
 	public class Caixa
 	{
-		public Caixa(int dono, string nome, string descricao, float quantia, int? idFaturaCartaoCredito, bool ativo)
+		public Caixa(int idDono, string nome, string descricao, float quantia, int? idFaturaCartaoCredito, bool ativo)
 		{
-			Dono = dono;
+			IdDono = idDono;
 			Nome = nome;
 			Descricao = descricao;
 			Quantia = quantia;
@@ -19,7 +19,7 @@ namespace MePoupe2.API.Persistencia.Entidades
 		}
 
 		public int Id { get; private set; }
-		public int Dono { get; private set; }
+		public int IdDono { get; private set; }
 		public string Nome { get; private set; }
 		public string Descricao { get; private set; }
 		public float Quantia { get; private set; }

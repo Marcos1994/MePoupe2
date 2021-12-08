@@ -22,14 +22,14 @@ namespace MePoupe2.API.Persistencia.Repositorios
 			return dbContext;
 		}
 
-		public IEnumerable<Caixa> GetAll(int idUsuario)
+		public IEnumerable<Caixa> GetAll(int idDono)
 		{
-			return dbContext.Caixas.Where(c => c.Dono == idUsuario).ToList();
+			return dbContext.Caixas.Where(c => c.IdDono == idDono).ToList();
 		}
 
-		public IEnumerable<Caixa> GetAllActive(int idUsuario)
+		public IEnumerable<Caixa> GetAllActive(int idDono)
 		{
-			return dbContext.Caixas.Where(c => c.Dono == idUsuario && c.Ativo).ToList();
+			return dbContext.Caixas.Where(c => c.IdDono == idDono && c.Ativo).ToList();
 		}
 
 		public Caixa GetById(int id)

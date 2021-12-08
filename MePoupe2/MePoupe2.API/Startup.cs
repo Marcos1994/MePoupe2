@@ -1,4 +1,5 @@
 using MePoupe2.API.Aplicacao.Interfaces;
+using MePoupe2.API.Aplicacao.Profiles;
 using MePoupe2.API.Aplicacao.Servicos;
 using MePoupe2.API.Persistencia;
 using MePoupe2.API.Persistencia.Context;
@@ -40,6 +41,8 @@ namespace MePoupe2.API
 			var connectionString = Configuration.GetConnectionString("MePoupe2Cs");
 			services.AddDbContext<MePoupe2DbContext>(o => o.UseSqlServer(connectionString));
 			services.AddScoped<MePoupe2DbContext>();
+
+			services.AddAutoMapper(typeof(CaixaProfile));
 
 			services.AddControllers();
 			services.AddSwaggerGen(c =>

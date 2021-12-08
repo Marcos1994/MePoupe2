@@ -8,8 +8,8 @@ namespace MePoupe2.API.Persistencia.Interfaces
 {
 	public interface ICaixaReposiroty : IRepository
 	{
-		IEnumerable<Caixa> GetAll(int idUsuario);
-		IEnumerable<Caixa> GetAllActive(int idUsuario);
+		IEnumerable<Caixa> GetAll(int idDono);
+		IEnumerable<Caixa> GetAllActive(int idDono);
 		Caixa GetById(int id);
 		void Add(Caixa caixa);
 		void Update(Caixa caixa);

@@ -1,4 +1,5 @@
-﻿using MePoupe2.API.Aplicacao.InputModels;
+﻿using AutoMapper;
+using MePoupe2.API.Aplicacao.InputModels;
 using MePoupe2.API.Aplicacao.Interfaces;
 using MePoupe2.API.Aplicacao.UpdateModels;
 using MePoupe2.API.Aplicacao.ViewModels;
@@ -14,16 +15,18 @@ namespace MePoupe2.API.Aplicacao.Servicos
 	public class CaixaService : ICaixaService
 	{
 		private readonly ICaixaReposiroty caixaContext;
-		public CaixaService(ICaixaReposiroty caixaContext)
+		private readonly IMapper mapper;
+		public CaixaService(ICaixaReposiroty caixaContext, IMapper mapper)
 		{
 			this.caixaContext = caixaContext;
+			this.mapper = mapper;
 		}
 
 		public CaixaViewModel CriarCaixa(CaixaInputModel inputCaixa)
 		{
-			Caixa caixa = new Caixa(inputCaixa.Dono, inputCaixa.Nome, inputCaixa.Descricao, inputCaixa.Quantia, null, true);
+			Caixa caixa = mapper.Map<Caixa>(inputCaixa);
 			caixaContext.Add(caixa);
-			return new CaixaViewModel { Id=caixa.Id, Ativo=caixa.Ativo, Descricao=caixa.Descricao, Nome=caixa.Nome, Quantia=caixa.Quantia };
+			return mapper.Map<CaixaViewModel>(caixa);
 		}
 
 		public void AtualizarCaixa(CaixaUpdateModel inputCaixa)
@@ -59,11 +62,13 @@ namespace MePoupe2.API.Aplicacao.Servicos
 
 		public IEnumerable<CaixaBasicViewModel> ListarCaixas(int idUsuario)
 		{
-			var caixas = caixaContext.GetAll(idUsuario).ToList();
-			List<CaixaBasicViewModel> caixasViewModel = new List<CaixaBasicViewModel>();
-			for (int i = 0; i < caixas.Count; i++)
-				caixasViewModel.Add(new CaixaBasicViewModel { Id=caixas[i].Id, Ativo=caixas[i].Ativo, Nome=caixas[i].Nome, Quantia=caixas[i].Quantia });
-			return caixasViewModel;
+			//List<CaixaBasicViewModel> caixas = caixaContext.GetAll(idUsuario)
+			//	.Select(c => new CaixaBasicViewModel { Id = c.Id, Nome = c.Nome, Quantia = c.Quantia, Ativo = c.Ativo })
+			//	.ToList();
+
+			List<CaixaBasicViewModel> caixas = mapper.Map<List<CaixaBasicViewModel>>(caixaContext.GetAll(idUsuario));
+
+			return caixas;
 		}
 
 		public CaixaViewModel CarregarCaixa(int idCaixa)
@@ -71,7 +76,7 @@ namespace MePoupe2.API.Aplicacao.Servicos
 			Caixa caixa = caixaContext.GetById(idCaixa);
 			if (caixa == null)
 				return null;
-			return new CaixaViewModel { Id = caixa.Id, Ativo = caixa.Ativo, Descricao = caixa.Descricao, Nome = caixa.Nome, Quantia=caixa.Quantia };
+			return mapper.Map<CaixaViewModel>(caixa);
 		}
 	}
 }
