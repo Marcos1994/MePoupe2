@@ -1,6 +1,8 @@
+using FluentValidation.AspNetCore;
 using MePoupe2.API.Aplicacao.Interfaces;
 using MePoupe2.API.Aplicacao.Profiles;
 using MePoupe2.API.Aplicacao.Servicos;
+using MePoupe2.API.Aplicacao.Validators;
 using MePoupe2.API.Persistencia;
 using MePoupe2.API.Persistencia.Context;
 using MePoupe2.API.Persistencia.Interfaces;
@@ -35,15 +37,19 @@ namespace MePoupe2.API
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddScoped<ICaixaService, CaixaService>();
+			services.AddScoped<ILancamentoService, LancamentoService>();
 
 			services.AddScoped<ICaixaReposiroty, CaixaRepository>();
+			services.AddScoped<ILancamentoRepository, LancamentoRepository>();
 
 			services.AddDbContext<MePoupe2DbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("MePoupe2Cs")));
 			services.AddScoped<MePoupe2DbContext>();
 
 			services.AddAutoMapper(typeof(CaixaProfile));
 
-			services.AddControllers();
+			services.AddControllers()
+				.AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<CaixaInputModelValidator>());
+
 			services.AddSwaggerGen(c =>
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "MePoupe2.API", Version = "v1" });

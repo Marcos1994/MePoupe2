@@ -7,6 +7,11 @@ namespace MePoupe2.API.Persistencia.Entidades
 {
 	public class Lancamento : LancamentoBase
 	{
+		public Lancamento() : base()
+		{
+
+		}
+
 		public Lancamento(string nome, string categoria, int idCaixa, bool receita, float valor, DateTime dataLancamento, DateTime dataVencimento, int efetivado, int? idLancamentoParcelado)
 			: base(nome, categoria, idCaixa, receita, valor)
 		{
@@ -24,6 +29,11 @@ namespace MePoupe2.API.Persistencia.Entidades
 
 	public class LancamentoParcelado
 	{
+		public LancamentoParcelado()
+		{
+
+		}
+
 		public LancamentoParcelado(string nome)
 		{
 			Nome = nome;

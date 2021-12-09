@@ -7,6 +7,11 @@ namespace MePoupe2.API.Persistencia.Entidades
 {
 	public abstract class LancamentoBase
 	{
+		protected LancamentoBase()
+		{
+
+		}
+
 		protected LancamentoBase(string nome, string categoria, int idCaixa, bool receita, float valor)
 		{
 			//Id = id;

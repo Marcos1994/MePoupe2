@@ -27,11 +27,6 @@ namespace MePoupe2.API.Persistencia.Repositorios
 			return dbContext.Caixas.Where(c => c.IdDono == idDono).ToList();
 		}
 
-		public IEnumerable<Caixa> GetAllActive(int idDono)
-		{
-			return dbContext.Caixas.Where(c => c.IdDono == idDono && c.Ativo).ToList();
-		}
-
 		public Caixa GetById(int id)
 		{
 			return dbContext.Caixas.FirstOrDefault(c => c.Id == id);

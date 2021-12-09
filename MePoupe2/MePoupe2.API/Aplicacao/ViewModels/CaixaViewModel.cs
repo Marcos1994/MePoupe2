@@ -15,7 +15,12 @@ namespace MePoupe2.API.Aplicacao.ViewModels
 
 	public record CaixaViewModel : CaixaBasicViewModel
 	{
+		public CaixaViewModel()
+		{
+			Lancamentos = new List<LancamentoBaseViewModel>();
+		}
 		public string Descricao { get; set; }
 		public LancamentoProgramadoBasicViewModel FaturaCartaoCredito { get; set; }
+		public List<LancamentoBaseViewModel> Lancamentos { get; set; }
 	}
 }
