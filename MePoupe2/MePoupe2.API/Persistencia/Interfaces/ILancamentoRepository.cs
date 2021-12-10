@@ -8,7 +8,9 @@ namespace MePoupe2.API.Persistencia.Interfaces
 {
 	public interface ILancamentoRepository : IRepository
 	{
-		IEnumerable<Lancamento> GetAll(int idCaixa, bool? receita);
+		IEnumerable<Lancamento> GetAll(int idCaixa);
+		IEnumerable<Lancamento> GetAll(int idCaixa, int estado);
+		IEnumerable<Lancamento> GetAll(int idCaixa, bool receita);
 		IEnumerable<Lancamento> GetParcelas(int idLancamentoParcelado);
 		Lancamento GetById(int id);
 		LancamentoParcelado GetLancamentoParcelado(int id);

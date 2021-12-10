@@ -16,5 +16,6 @@ namespace MePoupe2.API.Aplicacao.Interfaces
 		void ExcluirCaixa(int idCaixa);
 		IEnumerable<CaixaBasicViewModel> ListarCaixas(int idUsuario);
 		CaixaViewModel CarregarCaixa(int idCaixa);
+		float QuantiaCaixa(int idCaixa);
 	}
 }

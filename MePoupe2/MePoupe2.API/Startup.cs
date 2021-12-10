@@ -39,16 +39,20 @@ namespace MePoupe2.API
 			services.AddScoped<ICaixaService, CaixaService>();
 			services.AddScoped<ILancamentoService, LancamentoService>();
 
-			services.AddScoped<ICaixaReposiroty, CaixaRepository>();
+			services.AddScoped<ICaixaRepository, CaixaRepository>();
 			services.AddScoped<ILancamentoRepository, LancamentoRepository>();
 
 			services.AddDbContext<MePoupe2DbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("MePoupe2Cs")));
 			services.AddScoped<MePoupe2DbContext>();
 
 			services.AddAutoMapper(typeof(CaixaProfile));
+			services.AddAutoMapper(typeof(LancamentoProfile));
 
 			services.AddControllers()
-				.AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<CaixaInputModelValidator>());
+				.AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<CaixaInputModelValidator>())
+				.AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<CaixaUpdateModelValidator>())
+				.AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<LancamentoBaseInputModelValidator>())
+				.AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<LancamentoParceladoInputModelValidator>());
 
 			services.AddSwaggerGen(c =>
 			{

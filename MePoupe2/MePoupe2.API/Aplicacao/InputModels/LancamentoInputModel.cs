@@ -10,9 +10,8 @@ namespace MePoupe2.API.Aplicacao.InputModels
 		public int Efetivado { get; set; }
 	}
 
-	public record LancamentoParceladoInputModel
+	public record LancamentoParceladoInputModel : LancamentoBaseInputModel
 	{
-		public string Nome { get; set; }
 		public List<LancamentoInputModel> Parcelas { get; set; }
 	}
 }

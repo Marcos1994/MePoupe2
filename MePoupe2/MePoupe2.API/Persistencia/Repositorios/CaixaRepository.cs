@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MePoupe2.API.Persistencia.Repositorios
 {
-	public class CaixaRepository : Repository, ICaixaReposiroty
+	public class CaixaRepository : Repository, ICaixaRepository
 	{
 		private readonly MePoupe2DbContext dbContext;
 		public CaixaRepository(MePoupe2DbContext dbContext)
@@ -48,6 +48,14 @@ namespace MePoupe2.API.Persistencia.Repositorios
 		{
 			dbContext.Caixas.Remove(caixa);
 			dbContext.SaveChanges();
+		}
+
+		public float GetQuantia(int idCaixa)
+		{
+			float quantia = dbContext.Lancamentos
+				.Where(l => l.IdCaixa == idCaixa && l.Efetivado == 1)
+				.Sum(l => (l.Receita) ? l.Valor : -l.Valor);
+			return quantia;
 		}
 	}
 }

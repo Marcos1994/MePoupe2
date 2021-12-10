@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace MePoupe2.API.Persistencia.Interfaces
 {
-	public interface ICaixaReposiroty : IRepository
+	public interface ICaixaRepository : IRepository
 	{
 		IEnumerable<Caixa> GetAll(int idDono);
 		Caixa GetById(int id);
 		void Add(Caixa caixa);
 		void Update(Caixa caixa);
 		void Delete(Caixa caixa);
+		float GetQuantia(int idCaixa);
 	}
 }

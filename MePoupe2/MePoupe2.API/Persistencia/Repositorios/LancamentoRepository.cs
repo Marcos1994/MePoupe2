@@ -23,11 +23,19 @@ namespace MePoupe2.API.Persistencia.Repositorios
 			return dbContext;
 		}
 
-		public IEnumerable<Lancamento> GetAll(int idCaixa, bool? receita)
+		public IEnumerable<Lancamento> GetAll(int idCaixa)
 		{
-			if(receita == null)
-				return (from l in dbContext.Lancamentos where l.IdCaixa == idCaixa select l).ToList();
+			return (from l in dbContext.Lancamentos where l.IdCaixa == idCaixa select l).ToList();
+		}
+		
 
+		public IEnumerable<Lancamento> GetAll(int idCaixa, int estado)
+		{
+			return (from l in dbContext.Lancamentos where l.IdCaixa == idCaixa && l.Efetivado == estado select l).ToList();
+		}
+
+		public IEnumerable<Lancamento> GetAll(int idCaixa, bool receita)
+		{
 			bool _receita = Convert.ToBoolean(receita);
 			return (from l in dbContext.Lancamentos where l.IdCaixa == idCaixa && l.Receita == _receita select l).ToList();
 		}
