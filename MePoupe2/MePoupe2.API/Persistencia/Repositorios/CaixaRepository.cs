@@ -53,7 +53,7 @@ namespace MePoupe2.API.Persistencia.Repositorios
 		public float GetQuantia(int idCaixa)
 		{
 			float quantia = dbContext.Lancamentos
-				.Where(l => l.IdCaixa == idCaixa && l.Efetivado == 1)
+				.Where(l => l.IdCaixa == idCaixa && l.Estado == 1)
 				.Sum(l => (l.Receita) ? l.Valor : -l.Valor);
 			return quantia;
 		}

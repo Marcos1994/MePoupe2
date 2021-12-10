@@ -63,10 +63,6 @@ namespace MePoupe2.API.Aplicacao.Servicos
 
 		public IEnumerable<CaixaBasicViewModel> ListarCaixas(int idUsuario)
 		{
-			//List<CaixaBasicViewModel> caixas = caixaContext.GetAll(idUsuario)
-			//	.Select(c => new CaixaBasicViewModel { Id = c.Id, Nome = c.Nome, Quantia = c.Quantia, Ativo = c.Ativo })
-			//	.ToList();
-
 			List<CaixaBasicViewModel> caixas = mapper.Map<List<CaixaBasicViewModel>>(caixaContext.GetAll(idUsuario));
 
 			return caixas;

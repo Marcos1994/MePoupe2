@@ -7,7 +7,7 @@ namespace MePoupe2.API.Aplicacao.InputModels
 	{
 		public DateTime DataLancamento { get; set; }
 		public DateTime DataVencimento { get; set; }
-		public int Efetivado { get; set; }
+		public int Estado { get; set; }
 	}
 
 	public record LancamentoParceladoInputModel : LancamentoBaseInputModel

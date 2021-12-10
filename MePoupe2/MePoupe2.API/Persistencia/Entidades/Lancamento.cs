@@ -12,18 +12,18 @@ namespace MePoupe2.API.Persistencia.Entidades
 
 		}
 
-		public Lancamento(string nome, string categoria, int idCaixa, bool receita, float valor, DateTime dataLancamento, DateTime dataVencimento, int efetivado, int? idLancamentoParcelado)
+		public Lancamento(string nome, string categoria, int idCaixa, bool receita, float valor, DateTime dataLancamento, DateTime dataVencimento, int estado, int? idLancamentoParcelado)
 			: base(nome, categoria, idCaixa, receita, valor)
 		{
 			DataLancamento = dataLancamento;
 			DataVencimento = dataVencimento;
-			Efetivado = efetivado;
+			Estado = estado;
 			IdLancamentoParcelado = idLancamentoParcelado;
 		}
 
 		public DateTime DataLancamento { get; private set; }
 		public DateTime DataVencimento { get; private set; }
-		public int Efetivado { get; private set; }
+		public int Estado { get; private set; }
 		public int? IdLancamentoParcelado { get; private set; }
 	}
 

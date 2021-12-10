@@ -9,7 +9,7 @@ namespace MePoupe2.API.Aplicacao.ViewModels
 	{
 		public DateTime DataLancamento { get; set; }
 		public DateTime DataVencimento { get; set; }
-		public int Efetivado { get; set; }
+		public int Estado { get; set; }
 		public int Parcelas { get; set; }
 	}
 
@@ -17,7 +17,7 @@ namespace MePoupe2.API.Aplicacao.ViewModels
 	{
 		public DateTime DataLancamento { get; set; }
 		public DateTime DataVencimento { get; set; }
-		public int Efetivado { get; set; }
+		public int Estado { get; set; }
 		public LancamentoParceladoViewModel LancamentoParcelado { get; set; }
 	}
 

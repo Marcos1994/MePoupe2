@@ -31,7 +31,7 @@ namespace MePoupe2.API.Persistencia.Repositorios
 
 		public IEnumerable<Lancamento> GetAll(int idCaixa, int estado)
 		{
-			return (from l in dbContext.Lancamentos where l.IdCaixa == idCaixa && l.Efetivado == estado select l).ToList();
+			return (from l in dbContext.Lancamentos where l.IdCaixa == idCaixa && l.Estado == estado select l).ToList();
 		}
 
 		public IEnumerable<Lancamento> GetAll(int idCaixa, bool receita)

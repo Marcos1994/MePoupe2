@@ -44,10 +44,10 @@ namespace MePoupe2.API.Aplicacao.Servicos
 				if (inputLancamento.Parcelas[i].Receita != inputLancamento.Receita)
 					throw new Exception("Não é possível criar um lançamento cujas parcelas possuam receiras e despesas.");
 
-				if (inputLancamento.Parcelas[i].Efetivado == Convert.ToInt16(EnumEstadoLancamento.Efetivado))
+				if (inputLancamento.Parcelas[i].Estado == Convert.ToInt16(EnumEstadoLancamento.Efetivado))
 					quantiaEfetivada += inputLancamento.Parcelas[i].Valor;
 
-				if (inputLancamento.Parcelas[i].Efetivado == Convert.ToInt16(EnumEstadoLancamento.Cancelado))
+				if (inputLancamento.Parcelas[i].Estado == Convert.ToInt16(EnumEstadoLancamento.Cancelado))
 					throw new Exception("Não é possível criar um lançamento com parcelas canceladas.");
 			}
 
