@@ -47,6 +47,7 @@ namespace MePoupe2.API
 
 			services.AddAutoMapper(typeof(CaixaProfile));
 			services.AddAutoMapper(typeof(LancamentoProfile));
+			services.AddAutoMapper(typeof(LancamentoParceladoProfile));
 
 			services.AddControllers()
 				.AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<CaixaInputModelValidator>())

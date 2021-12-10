@@ -3,10 +3,6 @@ using MePoupe2.API.Aplicacao.InputModels;
 using MePoupe2.API.Aplicacao.UpdateModels;
 using MePoupe2.API.Aplicacao.ViewModels;
 using MePoupe2.API.Persistencia.Entidades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MePoupe2.API.Aplicacao.Profiles
 {
@@ -16,7 +12,6 @@ namespace MePoupe2.API.Aplicacao.Profiles
 		{
 			CreateMap<LancamentoInputModel, Lancamento>().IncludeMembers(l => l.Lancamento);
 			CreateMap<LancamentoParceladoInputModel, Lancamento>(MemberList.None);
-			//CreateMap<LancamentoUpdateModel, Lancamento>();
 			CreateMap<Lancamento, LancamentoBasicViewModel>();
 			CreateMap<Lancamento, LancamentoViewModel>();
 		}

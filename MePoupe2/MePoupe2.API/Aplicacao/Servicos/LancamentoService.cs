@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using MePoupe2.API.Persistencia.Entidades;
 using MePoupe2.API.Aplicacao.InputModels;
 using MePoupe2.API.Aplicacao.Enumerators;
+using MePoupe2.API.Aplicacao.UpdateModels;
 
 namespace MePoupe2.API.Aplicacao.Servicos
 {
@@ -31,24 +32,21 @@ namespace MePoupe2.API.Aplicacao.Servicos
 			if (caixa == null)
 				return null;
 
-			float quantiaTotal = 0;
 			float quantiaEfetivada = 0;
 
 			for (int i = 0; i < inputLancamento.Parcelas.Count; i++)
 			{
-				quantiaTotal += inputLancamento.Parcelas[i].Valor;
-
 				inputLancamento.Parcelas[i].Lancamento = inputLancamento;
 
-				if (inputLancamento.Parcelas[i].Estado == Convert.ToInt16(EnumEstadoLancamento.Efetivado))
-					quantiaEfetivada += inputLancamento.Parcelas[i].Valor;
-
-				if (inputLancamento.Parcelas[i].Estado == Convert.ToInt16(EnumEstadoLancamento.Cancelado))
-					throw new Exception("Não é possível criar um lançamento com parcelas canceladas.");
+				switch(inputLancamento.Parcelas[i].Estado)
+				{
+					case (int)EnumEstadoLancamento.Efetivado:
+						quantiaEfetivada += inputLancamento.Parcelas[i].Valor;
+						break;
+					case (int)EnumEstadoLancamento.Cancelado:
+						throw new Exception("Não é possível criar um lançamento com parcelas canceladas.");
+				}
 			}
-
-			if(quantiaTotal != inputLancamento.Valor)
-				throw new Exception("O valor das parcelas do lançamento é diferente do valor total do lançamento.");
 
 			if (inputLancamento.Receita)
 			{
@@ -73,29 +71,134 @@ namespace MePoupe2.API.Aplicacao.Servicos
 			return mapper.Map<LancamentoViewModel>(lancamentoParcelado.Parcelas[0]);
 		}
 
-		public void AtualizarLancamento(LancamentoUpdanteModel inputLancamento)
+		public void AtualizarLancamento(LancamentoUpdateModel updateLancamento)
 		{
-			throw new NotImplementedException();
+			Lancamento lancamento = lancamentoContext.GetById(updateLancamento.Id);
+
+			if (lancamento.Estado == (int)EnumEstadoLancamento.Efetivado)
+				throw new Exception("Não é possível editar um lançamento já efetivado.");
+
+			lancamento.Update(updateLancamento.Nome, updateLancamento.Valor, updateLancamento.DataLancamento, updateLancamento.DataVencimento);
+
+			if(lancamento.Categoria != updateLancamento.Categoria)
+			{
+				if (lancamento.IdLancamentoParcelado == null)
+					lancamento.UpdateCategoria(updateLancamento.Categoria);
+				else
+				{
+					LancamentoParcelado lancamentoParcelado = lancamentoContext.GetLancamentoParcelado((int)lancamento.IdLancamentoParcelado);
+					lancamentoParcelado.Parcelas.AddRange(lancamentoContext.GetParcelas((int)lancamento.IdLancamentoParcelado));
+					for (int i = 0; i < lancamentoParcelado.Parcelas.Count; i++)
+						lancamentoParcelado.Parcelas[i].UpdateCategoria(updateLancamento.Categoria);
+					lancamentoContext.Update(lancamentoParcelado);
+					return;
+				}
+			}
+			lancamentoContext.Update(lancamento);
 		}
 
 		public void EfetivarLancamento(int idLancamento)
 		{
-			throw new NotImplementedException();
+			Lancamento lancamento = lancamentoContext.GetById(idLancamento);
+
+			switch(lancamento.Estado)
+			{
+				case (int)EnumEstadoLancamento.Cancelado:
+					throw new Exception("Não é possível efetivar um lançamento cancelado");
+				case (int)EnumEstadoLancamento.Efetivado:
+					return;
+			}
+
+			if (!lancamento.Receita)
+			{
+				float quantiaEmCaixa = caixaContext.GetQuantia(lancamento.IdCaixa);
+				if (lancamento.Valor > quantiaEmCaixa)
+					throw new Exception("Não há quantia suficiente em caixa para efetivar esta despesa.");
+			}
+
+			lancamento.UpdateEstado((int)EnumEstadoLancamento.Efetivado);
+			lancamentoContext.Update(lancamento);
 		}
 
 		public LancamentoParceladoViewModel ParcelarLancamento(int idLancamento, int quantidadeParcelas)
 		{
-			throw new NotImplementedException();
+			Lancamento lancamentoInput = lancamentoContext.GetById(idLancamento);
+
+			if (lancamentoInput.IdLancamentoParcelado != null)
+				throw new Exception("Não é possível parcelar um lançamento parcelado.");
+
+			if(lancamentoInput.Estado != (int) EnumEstadoLancamento.Pendente)
+				throw new Exception("Só é possível parcelar lançamentos pendentes.");
+
+			if (quantidadeParcelas < 2)
+				throw new Exception("Não é possível parcelar um lançamento em menos de 2 parcelas.");
+
+			float valor = (float)Math.Floor((lancamentoInput.Valor / quantidadeParcelas) * 100) / 100;
+
+			LancamentoParceladoInputModel lancamentoParceladoInput = mapper.Map<LancamentoParceladoInputModel>(lancamentoInput);
+			for (int i = 1; i <= quantidadeParcelas; i++)
+			{
+				lancamentoParceladoInput.Parcelas
+					.Add(new LancamentoInputModel() {
+						Nome = $"{lancamentoInput.Nome} ({i}/{quantidadeParcelas})",
+						Estado = (int) EnumEstadoLancamento.Pendente,
+						DataVencimento = lancamentoInput.DataVencimento,
+						Valor = valor
+					});
+			}
+			lancamentoParceladoInput.Parcelas[0].Valor += (float)((lancamentoInput.Valor * 100) % quantidadeParcelas) / 100;
+
+			string transacao = "ParcelandoLancamento";
+			int idLancamentoView = 0;
+			try
+			{
+				lancamentoContext.StartTransaction(transacao);
+				LancamentoViewModel lancamentoView = CriarLancamento(lancamentoParceladoInput);
+				ExcluirLancamento(idLancamento);
+				lancamentoContext.FinishTransaction();
+				idLancamentoView = lancamentoView.IdLancamentoParcelado;
+			}
+			catch (Exception ex)
+			{
+				lancamentoContext.RollbackTransaction(transacao);
+				throw new Exception("Não foi possível realizar o parcelamento.\n"+ex.Message);
+			}
+			return CarregarLancamentoParcelado(idLancamentoView);
 		}
 
 		public void ExcluirLancamento(int idLancamento)
 		{
-			throw new NotImplementedException();
+			Lancamento lancamento = lancamentoContext.GetById(idLancamento);
+
+			if (lancamento.Estado == (int)EnumEstadoLancamento.Efetivado)
+				throw new Exception("Não é possível excluir um lançamento já efetivado.");
+
+			if (lancamento.IdLancamentoParcelado != null)
+				throw new Exception("Não é possível excluir apenas uma parcela de um lançamento.");
+
+			lancamentoContext.Delete(lancamento);
 		}
 
 		public void ExcluirParcelamento(int idLancamentoParcelado)
 		{
-			throw new NotImplementedException();
+			LancamentoParcelado lancamentoParcelado = lancamentoContext.GetLancamentoParcelado(idLancamentoParcelado);
+			lancamentoParcelado.Parcelas.AddRange(lancamentoContext.GetParcelas(idLancamentoParcelado));
+
+			bool possuiParcelasEfetivadas = lancamentoParcelado.Parcelas.Any(p => p.Estado == (int) EnumEstadoLancamento.Efetivado);
+
+			if(possuiParcelasEfetivadas)
+			{
+				for (int i = 0; i < lancamentoParcelado.Parcelas.Count; i++)
+				{
+					if (lancamentoParcelado.Parcelas[i].Estado == (int)EnumEstadoLancamento.Pendente)
+						lancamentoParcelado.Parcelas[i].UpdateEstado((int)EnumEstadoLancamento.Cancelado);
+				}
+				lancamentoContext.Update(lancamentoParcelado);
+			}
+			else
+			{
+				lancamentoContext.Delete(lancamentoParcelado);
+			}
 		}
 
 		public IEnumerable<LancamentoBasicViewModel> ListarTodos(int idCaixa)
@@ -108,7 +211,12 @@ namespace MePoupe2.API.Aplicacao.Servicos
 			throw new NotImplementedException();
 		}
 
-		public IEnumerable<LancamentoBasicViewModel> ListarPendentes(int idCaixa, bool? receita)
+		public IEnumerable<LancamentoBasicViewModel> ListarPendentes(int idCaixa)
+		{
+			throw new NotImplementedException();
+		}
+
+		public IEnumerable<LancamentoBasicViewModel> ListarPendentes(int idCaixa, bool receita)
 		{
 			throw new NotImplementedException();
 		}
@@ -120,7 +228,10 @@ namespace MePoupe2.API.Aplicacao.Servicos
 
 		public LancamentoParceladoViewModel CarregarLancamentoParcelado(int idLancamentoParcelado)
 		{
-			throw new NotImplementedException();
+			LancamentoParcelado lancamentoParcelado = lancamentoContext.GetLancamentoParcelado(idLancamentoParcelado);
+			lancamentoParcelado.Parcelas.AddRange(lancamentoContext.GetParcelas(idLancamentoParcelado));
+			LancamentoParceladoViewModel lancamentoParceladoView = mapper.Map<LancamentoParceladoViewModel>(lancamentoParcelado);
+			return lancamentoParceladoView;
 		}
 	}
 }

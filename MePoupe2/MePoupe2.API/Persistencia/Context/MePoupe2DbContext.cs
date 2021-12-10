@@ -48,7 +48,7 @@ namespace MePoupe2.API.Persistencia.Context
 				.HasMany(lp => lp.Parcelas)
 				.WithOne()
 				.HasForeignKey(l => l.IdLancamentoParcelado)
-				.OnDelete(DeleteBehavior.Restrict);
+				.OnDelete(DeleteBehavior.Cascade);
 		}
 	}
 }

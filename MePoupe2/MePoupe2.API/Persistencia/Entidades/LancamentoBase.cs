@@ -28,5 +28,16 @@ namespace MePoupe2.API.Persistencia.Entidades
 		public int IdCaixa { get; private set; }
 		public bool Receita { get; private set; }
 		public float Valor { get; private set; }
+
+		public void Update(string nome, float valor)
+		{
+			Nome = nome;
+			Valor = valor;
+		}
+
+		public void UpdateCategoria(string categoria)
+		{
+			Categoria = categoria;
+		}
 	}
 }

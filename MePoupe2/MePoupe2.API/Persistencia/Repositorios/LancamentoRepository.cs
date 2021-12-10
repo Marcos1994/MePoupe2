@@ -47,11 +47,11 @@ namespace MePoupe2.API.Persistencia.Repositorios
 
 		public Lancamento GetById(int id)
 		{
-			return dbContext.Lancamentos.FirstOrDefault(l => l.Id == id);
+			return dbContext.Lancamentos.First(l => l.Id == id);
 		}
 		public LancamentoParcelado GetLancamentoParcelado(int id)
 		{
-			return dbContext.LancamentosParcelados.FirstOrDefault(l => l.Id == id);
+			return dbContext.LancamentosParcelados.First(l => l.Id == id);
 		}
 
 		public void Add(Lancamento lancamento)
@@ -69,6 +69,12 @@ namespace MePoupe2.API.Persistencia.Repositorios
 		public void Update(Lancamento lancamento)
 		{
 			dbContext.Lancamentos.Update(lancamento);
+			dbContext.SaveChanges();
+		}
+
+		public void Update(LancamentoParcelado lancamentoParcelado)
+		{
+			dbContext.LancamentosParcelados.Update(lancamentoParcelado);
 			dbContext.SaveChanges();
 		}
 

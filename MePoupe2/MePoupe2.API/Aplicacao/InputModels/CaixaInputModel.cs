@@ -10,7 +10,6 @@ namespace MePoupe2.API.Aplicacao.InputModels
 		public int IdDono { get; set; }
 		public string Nome { get; set; }
 		public string Descricao { get; set; }
-		public float Quantia { get; set; }
 		public LancamentoProgramadoInputModel FaturaCartaoCredito { get; set; }
 	}
 }

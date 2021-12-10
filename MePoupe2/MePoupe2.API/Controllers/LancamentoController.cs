@@ -21,9 +21,12 @@ namespace MePoupe2.API.Controllers
 		}
 
 		[HttpGet("{idCaixa}")]
-		public IActionResult GetAll(int idCaixa)
+		public IActionResult GetAll(int idCaixa, bool apenasPendentes)
 		{
-			return Ok(lancamentoService.ListarTodos(idCaixa));
+			if(apenasPendentes)
+				return Ok(lancamentoService.ListarPendentes(idCaixa));
+			else
+				return Ok(lancamentoService.ListarTodos(idCaixa));
 		}
 
 		[HttpGet("{idLancamento}")]
@@ -45,15 +48,28 @@ namespace MePoupe2.API.Controllers
 		}
 
 		[HttpPut]
-		public IActionResult Put(CaixaUpdateModel model)
+		public IActionResult Put(LancamentoUpdateModel model)
 		{
-			throw new NotImplementedException();
+			lancamentoService.AtualizarLancamento(model);
+			return Ok();
+		}
+
+		[HttpPost("{idLancamento}")]
+		public IActionResult Post(int idLancamento, int quantidadeParcelas)
+		{
+			var lancamento = lancamentoService.ParcelarLancamento(idLancamento, quantidadeParcelas);
+			return Ok();
+			//return CreatedAtAction(nameof(GetById), new { id = lancamento.Id }, lancamento);
 		}
 
 		[HttpDelete("{id}")]
-		public IActionResult Delete(int id)
+		public IActionResult Delete(int id, bool lancamentoParcelado)
 		{
-			throw new NotImplementedException();
+			if (lancamentoParcelado)
+				lancamentoService.ExcluirParcelamento(id);
+			else
+				lancamentoService.ExcluirLancamento(id);
+			return Ok();
 		}
 	}
 }

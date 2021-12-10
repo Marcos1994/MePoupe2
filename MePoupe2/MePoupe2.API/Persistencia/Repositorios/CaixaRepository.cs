@@ -29,7 +29,7 @@ namespace MePoupe2.API.Persistencia.Repositorios
 
 		public Caixa GetById(int id)
 		{
-			return dbContext.Caixas.FirstOrDefault(c => c.Id == id);
+			return dbContext.Caixas.First(c => c.Id == id);
 		}
 
 		public void Add(Caixa caixa)

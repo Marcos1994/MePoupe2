@@ -14,6 +14,11 @@ namespace MePoupe2.API.Aplicacao.InputModels
 
 	public record LancamentoParceladoInputModel
 	{
+		public LancamentoParceladoInputModel()
+		{
+			Parcelas = new List<LancamentoInputModel>();
+		}
+
 		public string Nome { get; set; }
 		public string Categoria { get; set; }
 		public int IdCaixa { get; set; }

@@ -25,13 +25,25 @@ namespace MePoupe2.API.Persistencia.Entidades
 		public DateTime DataVencimento { get; private set; }
 		public int Estado { get; private set; }
 		public int? IdLancamentoParcelado { get; private set; }
+
+		public void Update(string nome, float valor, DateTime dataLancamento, DateTime dataVencimento)
+		{
+			base.Update(nome, valor);
+			DataLancamento = dataLancamento;
+			DataVencimento = dataVencimento;
+		}
+
+		public void UpdateEstado(int estado)
+		{
+			Estado = estado;
+		}
 	}
 
 	public class LancamentoParcelado
 	{
 		public LancamentoParcelado()
 		{
-
+			Parcelas = new List<Lancamento>();
 		}
 
 		public LancamentoParcelado(string nome)

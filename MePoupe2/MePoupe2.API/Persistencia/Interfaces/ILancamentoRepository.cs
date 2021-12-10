@@ -17,6 +17,7 @@ namespace MePoupe2.API.Persistencia.Interfaces
 		void Add(Lancamento lancamento);
 		void Add(LancamentoParcelado lancamentoParcelado);
 		void Update(Lancamento lancamento);
+		void Update(LancamentoParcelado lancamentoParcelado);
 		void Delete(Lancamento lancamento);
 		void Delete(LancamentoParcelado lancamentoParcelado);
 	}

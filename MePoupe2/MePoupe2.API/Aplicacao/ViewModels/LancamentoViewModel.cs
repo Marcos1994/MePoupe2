@@ -10,20 +10,11 @@ namespace MePoupe2.API.Aplicacao.ViewModels
 		public DateTime DataLancamento { get; set; }
 		public DateTime DataVencimento { get; set; }
 		public int Estado { get; set; }
-		public int Parcelas { get; set; }
 	}
 
-	public record LancamentoViewModel : LancamentoBaseViewModel
+	public record LancamentoViewModel : LancamentoBasicViewModel
 	{
-		public DateTime DataLancamento { get; set; }
-		public DateTime DataVencimento { get; set; }
-		public int Estado { get; set; }
+		public int IdLancamentoParcelado { get; set; }
 		public LancamentoParceladoViewModel LancamentoParcelado { get; set; }
-	}
-
-	public record LancamentoParceladoViewModel
-	{
-		public string Nome { get; set; }
-		public List<LancamentoBasicViewModel> Parcelas { get; set; }
 	}
 }
