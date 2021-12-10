@@ -51,7 +51,6 @@ namespace MePoupe2.API
 			services.AddControllers()
 				.AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<CaixaInputModelValidator>())
 				.AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<CaixaUpdateModelValidator>())
-				.AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<LancamentoBaseInputModelValidator>())
 				.AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<LancamentoParceladoInputModelValidator>());
 
 			services.AddSwaggerGen(c =>

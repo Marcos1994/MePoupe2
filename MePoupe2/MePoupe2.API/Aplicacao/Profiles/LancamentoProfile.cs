@@ -14,7 +14,8 @@ namespace MePoupe2.API.Aplicacao.Profiles
 	{
 		public LancamentoProfile()
 		{
-			CreateMap<LancamentoInputModel, Lancamento>();
+			CreateMap<LancamentoInputModel, Lancamento>().IncludeMembers(l => l.Lancamento);
+			CreateMap<LancamentoParceladoInputModel, Lancamento>(MemberList.None);
 			//CreateMap<LancamentoUpdateModel, Lancamento>();
 			CreateMap<Lancamento, LancamentoBasicViewModel>();
 			CreateMap<Lancamento, LancamentoViewModel>();

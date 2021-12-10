@@ -38,11 +38,7 @@ namespace MePoupe2.API.Aplicacao.Servicos
 			{
 				quantiaTotal += inputLancamento.Parcelas[i].Valor;
 
-				if (inputLancamento.Parcelas[i].IdCaixa != inputLancamento.IdCaixa)
-					throw new Exception("Não é possível criar um lançamento cujas parcelas sejam de caixas diferentes.");
-
-				if (inputLancamento.Parcelas[i].Receita != inputLancamento.Receita)
-					throw new Exception("Não é possível criar um lançamento cujas parcelas possuam receiras e despesas.");
+				inputLancamento.Parcelas[i].Lancamento = inputLancamento;
 
 				if (inputLancamento.Parcelas[i].Estado == Convert.ToInt16(EnumEstadoLancamento.Efetivado))
 					quantiaEfetivada += inputLancamento.Parcelas[i].Valor;
