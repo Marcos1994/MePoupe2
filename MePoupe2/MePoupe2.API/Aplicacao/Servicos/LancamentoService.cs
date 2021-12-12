@@ -203,27 +203,27 @@ namespace MePoupe2.API.Aplicacao.Servicos
 
 		public IEnumerable<LancamentoBasicViewModel> ListarTodos(int idCaixa)
 		{
-			throw new NotImplementedException();
+			return mapper.Map<List<LancamentoBasicViewModel>>(lancamentoContext.GetAll(idCaixa));
 		}
 
 		public IEnumerable<LancamentoBasicViewModel> ListarTodos(int idCaixa, bool receita)
 		{
-			throw new NotImplementedException();
+			return mapper.Map<List<LancamentoBasicViewModel>>(lancamentoContext.GetAll(idCaixa, receita));
 		}
 
 		public IEnumerable<LancamentoBasicViewModel> ListarPendentes(int idCaixa)
 		{
-			throw new NotImplementedException();
+			return mapper.Map<List<LancamentoBasicViewModel>>(lancamentoContext.GetAll(idCaixa).Select(l=>l.Estado == (int) EnumEstadoLancamento.Pendente));
 		}
 
 		public IEnumerable<LancamentoBasicViewModel> ListarPendentes(int idCaixa, bool receita)
 		{
-			throw new NotImplementedException();
+			return mapper.Map<List<LancamentoBasicViewModel>>(lancamentoContext.GetAll(idCaixa, receita).Select(l => l.Estado == (int)EnumEstadoLancamento.Pendente));
 		}
 
 		public LancamentoViewModel CarregarLancamento(int idLancamento)
 		{
-			throw new NotImplementedException();
+			return mapper.Map<LancamentoViewModel>(lancamentoContext.GetById(idLancamento));
 		}
 
 		public LancamentoParceladoViewModel CarregarLancamentoParcelado(int idLancamentoParcelado)
