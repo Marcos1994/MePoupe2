@@ -50,7 +50,7 @@ namespace MePoupe2.API.Aplicacao.Servicos
 
 		public void ExcluirCaixa(int idCaixa)
 		{
-			if (false) //Verifica se tem algum lançamento nesse caixa.
+			if (true) //Verifica se tem algum lançamento nesse caixa.
 			{
 				AtivarCaixa(idCaixa, false);
 			}
@@ -71,8 +71,6 @@ namespace MePoupe2.API.Aplicacao.Servicos
 		public CaixaViewModel CarregarCaixa(int idCaixa)
 		{
 			Caixa caixa = caixaContext.GetById(idCaixa);
-			if (caixa == null)
-				return null;
 			CaixaViewModel caixaView = mapper.Map<CaixaViewModel>(caixa);
 			caixaView.Quantia = QuantiaCaixa(idCaixa);
 			return caixaView;

@@ -213,12 +213,14 @@ namespace MePoupe2.API.Aplicacao.Servicos
 
 		public IEnumerable<LancamentoBasicViewModel> ListarPendentes(int idCaixa)
 		{
-			return mapper.Map<List<LancamentoBasicViewModel>>(lancamentoContext.GetAll(idCaixa).Select(l=>l.Estado == (int) EnumEstadoLancamento.Pendente));
+			List<Lancamento> lancamentos = lancamentoContext.GetAll(idCaixa).ToList();
+			return mapper.Map<List<LancamentoBasicViewModel>>(from l in lancamentos where l.Estado == (int)EnumEstadoLancamento.Pendente select l);
 		}
 
 		public IEnumerable<LancamentoBasicViewModel> ListarPendentes(int idCaixa, bool receita)
 		{
-			return mapper.Map<List<LancamentoBasicViewModel>>(lancamentoContext.GetAll(idCaixa, receita).Select(l => l.Estado == (int)EnumEstadoLancamento.Pendente));
+			List<Lancamento> lancamentos = lancamentoContext.GetAll(idCaixa, receita).ToList();
+			return mapper.Map<List<LancamentoBasicViewModel>>(from l in lancamentos where l.Estado == (int)EnumEstadoLancamento.Pendente select l);
 		}
 
 		public LancamentoViewModel CarregarLancamento(int idLancamento)

@@ -16,17 +16,21 @@ namespace MePoupe2.API.Controllers
 	[ApiController]
 	public class CaixaController : ControllerBase
 	{
+		private int _idUsuario;
 		private readonly ICaixaService caixaService;
+		private readonly ILancamentoService lancamentoService;
 
-		public CaixaController(ICaixaService caixaService)
+		public CaixaController(ICaixaService caixaService, ILancamentoService lancamentoService)
 		{
+			_idUsuario = 1;
 			this.caixaService = caixaService;
+			this.lancamentoService = lancamentoService;
 		}
 
 		[HttpGet]
 		public IActionResult GetAll()
 		{
-			return Ok(caixaService.ListarCaixas(1));
+			return Ok(caixaService.ListarCaixas(_idUsuario));
 		}
 
 		[HttpGet("{id}")]
@@ -35,6 +39,7 @@ namespace MePoupe2.API.Controllers
 			var caixa = caixaService.CarregarCaixa(id);
 			if (caixa == null)
 				return NotFound();
+			caixa.Lancamentos.AddRange(lancamentoService.ListarPendentes(id));
 			return Ok(caixa);
 		}
 
@@ -48,9 +53,6 @@ namespace MePoupe2.API.Controllers
 		[HttpPut]
 		public IActionResult Put(CaixaUpdateModel model)
 		{
-			var caixa = caixaService.CarregarCaixa(model.Id);
-			if (caixa == null)
-				return NotFound();
 			caixaService.AtualizarCaixa(model);
 			return Ok();
 		}
@@ -58,10 +60,6 @@ namespace MePoupe2.API.Controllers
 		[HttpPut("{id}")]
 		public IActionResult Put(int id, bool ativo)
 		{
-			var caixa = caixaService.CarregarCaixa(id);
-			if (caixa == null)
-				return NotFound();
-
 			try
 			{
 				caixaService.AtivarCaixa(id, ativo);
@@ -76,10 +74,6 @@ namespace MePoupe2.API.Controllers
 		[HttpDelete("{id}")]
 		public IActionResult Delete(int id)
 		{
-			var caixa = caixaService.CarregarCaixa(id);
-			if (caixa == null)
-				return NotFound();
-
 			try
 			{
 				caixaService.ExcluirCaixa(id);

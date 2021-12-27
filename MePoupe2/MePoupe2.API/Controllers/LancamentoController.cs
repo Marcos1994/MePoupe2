@@ -32,11 +32,7 @@ namespace MePoupe2.API.Controllers
 		[HttpGet("{idLancamento}")]
 		public IActionResult GetById(int idLancamento)
 		{
-			return Ok();
-
 			var lancamento = lancamentoService.CarregarLancamento(idLancamento);
-			if (lancamento == null)
-				return NotFound();
 			return Ok(lancamento);
 		}
 

@@ -17,10 +17,10 @@ namespace MePoupe2.API.Aplicacao.ViewModels
 	{
 		public CaixaViewModel()
 		{
-			Lancamentos = new List<LancamentoBaseViewModel>();
+			Lancamentos = new List<LancamentoBasicViewModel>();
 		}
 		public string Descricao { get; set; }
 		public LancamentoProgramadoBasicViewModel FaturaCartaoCredito { get; set; }
-		public List<LancamentoBaseViewModel> Lancamentos { get; set; }
+		public List<LancamentoBasicViewModel> Lancamentos { get; set; }
 	}
 }
